@@ -6,7 +6,7 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 """Custom Deposit for Ultraviolet"""
-
+from flask import render_template
 from flask_babelex import gettext as _
 
 from . import config

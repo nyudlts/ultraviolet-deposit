@@ -35,4 +35,4 @@ def test_view(base_client):
     """Test view."""
     res = base_client.get("/")
     assert res.status_code == 200
-    assert 'Welcome to Ultraviolet-Deposit' in str(res.data)
+    assert 'index.js' in str(res.data)
