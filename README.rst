@@ -9,16 +9,19 @@
  Ultraviolet-Deposit
 =====================
 
-.. image:: https://github.com/nyudlts/ultraviolet-deposit/workflows/CI/badge.svg
-        :target: https://github.com/nyudlts/ultraviolet-deposit/actions?query=workflow%3ACI
-
-.. image:: https://img.shields.io/github/tag/nyudlts/ultraviolet-deposit.svg
-        :target: https://github.com/nyudlts/ultraviolet-deposit/releases
-
-.. image:: https://img.shields.io/pypi/dm/ultraviolet-deposit.svg
-        :target: https://pypi.python.org/pypi/ultraviolet-deposit
-
-.. image:: https://img.shields.io/github/license/nyudlts/ultraviolet-deposit.svg
-        :target: https://github.com/nyudlts/ultraviolet-deposit/blob/master/LICENSE
 
 Custom Deposit for Ultraviolet
+
+Will be used as an extention in main Ultraviolet project.
+
+Could be added to the main Ultraviolet project by running the command below in ultraviolet root folder
+
+```
+invenio-cli packages install git+https://github.com/nyudlts/ultraviolet-deposit#egg=ultraviolet-deposit
+```
+
+If we are doing changes in the module and want to add the new version to the local instance of ultraviole we can run 
+
+```
+invenio-cli packages install <path to the local copy of the demposit-module>
+```
