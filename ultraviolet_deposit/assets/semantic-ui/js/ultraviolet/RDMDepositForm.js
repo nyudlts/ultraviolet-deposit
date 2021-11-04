@@ -28,12 +28,12 @@ import {
   PublishButton,
   PublisherField,
   RelatedWorksField,
-  ResourceTypeField,
   SaveButton,
   TitlesField,
   VersionField,
 } from "react-invenio-deposit";
 import { AccordionField } from "react-invenio-forms";
+import { RemoteResourceTypeField } from "react-ultraviolet-deposit";
 import { Card, Container, Divider, Grid, Ref, Sticky } from "semantic-ui-react";
 import { i18next } from "@translations/invenio_app_rdm/i18next";
 
@@ -201,10 +201,11 @@ export class RDMDepositForm extends Component {
                     </Fragment>
                   ))}
 
-                  <ResourceTypeField
-                    options={this.vocabularies.metadata.resource_type}
+                  <RemoteResourceTypeField
+                    initialSuggestions={_get(this.props.record, "ui.resource_type", {})}
                     required
                   />
+
                   <TitlesField
                     options={this.vocabularies.metadata.titles}
                     recordUI={this.props.record.ui}
