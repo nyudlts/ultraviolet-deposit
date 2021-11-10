@@ -10,7 +10,6 @@
     <meta charset="utf-8" />
   </head>
   <body>
-
 {%- block page_body %}
   {%- if record %}
   <input id="deposits-record" type="hidden" name="deposits-record" value='{{record | tojson }}'></input>
@@ -26,9 +25,9 @@
   {%- endif %}
   <div id="deposit-form"></div>
 
-{%- block javascript %}
-  <script src="ultraviolet_deposit/assets/semantic-ui/js/ultraviolet/index.js"></script>
-{%- endblock %}
+  {%- block javascript %}
+    {{ webpack[''] }}
+  {%- endblock %}
 
     {%- endblock page_body %}
   </body>

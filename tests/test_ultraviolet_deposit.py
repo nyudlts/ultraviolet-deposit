@@ -8,7 +8,7 @@
 """Module tests."""
 
 from flask import Flask
-
+from invenio_theme import webpack
 from ultraviolet_deposit import UltravioletDeposit
 
 

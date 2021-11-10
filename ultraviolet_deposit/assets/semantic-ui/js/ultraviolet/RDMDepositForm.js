@@ -35,7 +35,7 @@ import {
 import { AccordionField } from "react-invenio-forms";
 import { RemoteResourceTypeField } from "react-ultraviolet-deposit";
 import { Card, Container, Divider, Grid, Ref, Sticky } from "semantic-ui-react";
-import { i18next } from "@translations/invenio_app_rdm/i18next";
+import { i18next } from "./i18next";
 
 export class RDMDepositForm extends Component {
   constructor(props) {
