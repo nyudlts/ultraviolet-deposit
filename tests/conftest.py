@@ -50,7 +50,8 @@ def create_app(instance_path):
             jinja2.FileSystemLoader('.'),
             app.jinja_loader
         ])
-        app.config['WEBPACKEXT_MANIFEST_PATH'] = ''
+        app.config['WEBPACKEXT_MANIFEST_PATH'] = \
+            ''
         Babel(app)
         UltravioletDeposit(app)
         InvenioAssets(app)
@@ -65,5 +66,6 @@ def create_app(instance_path):
             return render_template(
                 "tests/index.html",
             )
+
         return app
     return factory

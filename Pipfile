@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+invenio-assets = "*"
+invenio = "*"
+invenio-theme = "*"
+flask-webpackext = "*"
+invenio-search = "*"
+invenio-db = "*"
+elasticsearch = "==7.11.0"
+elasticsearch-dsl = "*"
+
+[dev-packages]
+pytest = "*"
+pytest-invenio = "*"
+flask-babelex = "*"
+
+[requires]
+python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true

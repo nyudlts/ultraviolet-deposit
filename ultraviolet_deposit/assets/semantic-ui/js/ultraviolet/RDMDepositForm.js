@@ -10,7 +10,6 @@ import _get from "lodash/get";
 import React, { Component, createRef, Fragment } from "react";
 import {
   AccessRightField,
-  CreatibutorsField,
   DatesField,
   DeleteButton,
   DepositFormApp,
