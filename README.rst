@@ -30,12 +30,17 @@ To run tests separately
 
 Make sure you use node 14 and python 3.8
 
+
 ```
 pipenv install --pre
 ```
 
 ```
 pipenv run invenio webpack buildall
+```
+
+```
+pipenv run pip install -e .
 ```
 
 If you want to run E2E
