@@ -38,7 +38,7 @@ pipenv install --pre
 pipenv run invenio webpack buildall
 ```
 
-If you want to run E2E 
+If you want to run E2E
 
 ```
 export E2E='yes'

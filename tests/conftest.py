@@ -51,7 +51,7 @@ def create_app(instance_path):
             app.jinja_loader
         ])
         app.config['WEBPACKEXT_MANIFEST_PATH'] = \
-            ''
+            '/Users/katepechekhonova/.local/share/virtualenvs/ultraviolet-deposit-b-imWsig/var/instance/static/dist/manifest.json'
         Babel(app)
         UltravioletDeposit(app)
         InvenioAssets(app)
@@ -59,7 +59,7 @@ def create_app(instance_path):
         InvenioDB(app)
         app.register_blueprint(blueprint)
         app.template_folder = 'tests'
-        app.static_folder = ''
+        app.static_folder = '/Users/katepechekhonova/.local/share/virtualenvs/ultraviolet-deposit-b-imWsig/var/instance/static'
         @app.route("/")
         def deposit_form():
             """Deposit form fixture."""
