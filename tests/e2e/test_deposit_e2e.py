@@ -20,6 +20,7 @@ import sys
 multiprocessing.set_start_method("fork")
 
 
+
 def test_frontpage(running_app, live_server, browser):
     """Test retrieval of front page."""
     browser.get(url_for('test_deposit.deposit_form', _external=True))

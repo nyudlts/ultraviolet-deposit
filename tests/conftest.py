@@ -61,6 +61,7 @@ from invenio_records import InvenioRecords
 from invenio_access import InvenioAccess
 from invenio_jsonschemas import InvenioJSONSchemas
 from invenio_records_resources import InvenioRecordsResources
+from flask_talisman import Talisman, ALLOW_FROM, talisman
 
 
 @pytest.fixture(scope='module')
