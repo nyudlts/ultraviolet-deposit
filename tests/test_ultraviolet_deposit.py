@@ -33,5 +33,5 @@ def test_init():
 
 def test_view(base_client):
     """Test view."""
-    res = base_client.get("/")
+    res = base_client.get("/test")
     assert res.status_code == 200

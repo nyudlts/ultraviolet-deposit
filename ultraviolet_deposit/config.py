@@ -15,3 +15,5 @@ ULTRAVIOLET_DEPOSIT_DEFAULT_VALUE = 'foobar'
 
 ULTRAVIOLET_DEPOSIT_BASE_TEMPLATE = 'ultraviolet_deposit/base.html'
 """Default base template for the demo page."""
+
+
