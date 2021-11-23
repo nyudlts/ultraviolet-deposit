@@ -25,3 +25,30 @@ If we are doing changes in the module and want to add the new version to the loc
 ```
 invenio-cli packages install <path to the local copy of the demposit-module>
 ```
+
+To run tests separately
+
+Make sure you use node 14 and python 3.8
+
+
+```
+pipenv install --pre
+```
+
+```
+pipenv run invenio webpack buildall
+```
+
+```
+pipenv run pip install -e .
+```
+
+If you want to run E2E
+
+```
+export E2E='yes'
+```
+
+```
+./run-tests.sh
+```
