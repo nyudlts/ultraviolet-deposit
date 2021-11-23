@@ -900,9 +900,7 @@ def extra_entry_points():
         ],
     }
 
-@pytest.fixture(scope='module')
-def instance_path():
-    return '/Users/katepechekhonova/.local/share/virtualenvs/ultraviolet-deposit-b-imWsig/var/instance'
+
 
 @pytest.fixture(scope='module')
 def create_app(entry_points, instance_path):
