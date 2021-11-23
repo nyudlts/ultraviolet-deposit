@@ -12,6 +12,7 @@ invenio-search = "*"
 invenio-db = "*"
 elasticsearch = "==7.11.0"
 elasticsearch-dsl = "*"
+invenio-access = "*"
 
 [dev-packages]
 pytest = "*"
