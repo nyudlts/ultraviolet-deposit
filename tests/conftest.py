@@ -11,19 +11,13 @@ See https://pytest-invenio.readthedocs.io/ for documentation on which test
 fixtures are available.
 """
 
-import shutil
-import sys
-
 from collections import namedtuple
 from datetime import datetime
 from unittest import mock
 
 import pytest
-from pytest_invenio.fixtures import database
 import arrow
 from dateutil import tz
-from flask import Flask, render_template
-from flask_babelex import Babel
 from invenio_access import ActionRoles
 from invenio_accounts.models import Role
 from invenio_rdm_records.records import RDMRecord, RDMDraft, RDMParent
@@ -36,32 +30,20 @@ from invenio_vocabularies.contrib.subjects.api import Subject
 from invenio_vocabularies.proxies import current_service as vocabulary_service
 from invenio_vocabularies.records.api import Vocabulary
 from invenio_app.factory import create_app as _create_app
-from invenio_app.wsgi_ui import application
 from invenio_rdm_records.services.schemas.utils import dump_empty
 from invenio_rdm_records.services.schemas import RDMRecordSchema
 
-from ultraviolet_deposit.ext import UltravioletDeposit
-from ultraviolet_deposit.views import blueprint
-from invenio_assets import InvenioAssets
-import jinja2
-from invenio_search import InvenioSearch
-from invenio_db import InvenioDB
 from invenio_rdm_records.proxies import current_rdm_records
-from invenio_rdm_records import InvenioRDMRecords
 from invenio_access.permissions import system_identity, superuser_access
-from invenio_app_rdm.records_ui.views import deposits
-from invenio_vocabularies import InvenioVocabularies
-from invenio_cache import InvenioCache, current_cache
+
+from invenio_cache import  current_cache
 from invenio_rdm_records import config
 from invenio_accounts.testutils import login_user_via_session
 from invenio_records.dictutils import dict_set
 from invenio_records.errors import MissingModelError
 from invenio_records_files.api import FileObject
-from invenio_records import InvenioRecords
-from invenio_access import InvenioAccess
-from invenio_jsonschemas import InvenioJSONSchemas
-from invenio_records_resources import InvenioRecordsResources
-from flask_talisman import Talisman, ALLOW_FROM, talisman
+
+
 
 
 @pytest.fixture(scope='module')
@@ -95,9 +77,6 @@ def app_config(app_config):
 
     # Variable not used. We set it to silent warnings
     app_config['JSONSCHEMAS_HOST'] = 'not-used'
-
-    #app_config[
-       # 'WEBPACKEXT_MANIFEST_PATH'] = '/Users/katepechekhonova/.local/share/virtualenvs/ultraviolet-deposit-b-imWsig/var/instance/static/dist/manifest.json'
 
     app_config["SEARCH_INDEX_PREFIX"] = "test"
 
@@ -381,6 +360,8 @@ def minimal_record():
     }
 
 
+
+
 @pytest.fixture()
 def parent(app, db):
     """A parent record."""
@@ -439,13 +420,13 @@ def identity_simple(users):
 
 
 @pytest.fixture(scope="module")
-def languages_type(app):
+def languages_type(app,database):
     """Lanuage vocabulary type."""
     return vocabulary_service.create_type(system_identity, "languages", "lng")
 
 
 @pytest.fixture(scope="module")
-def languages_v(app, languages_type):
+def languages_v(app, languages_type,database):
     """Language vocabulary record."""
     vocabulary_service.create(system_identity, {
         "id": "dan",
@@ -474,14 +455,14 @@ def languages_v(app, languages_type):
 
 
 @pytest.fixture(scope="module")
-def resource_type_type(app):
+def resource_type_type(app,database):
     """Resource type vocabulary type."""
     return vocabulary_service.create_type(
         system_identity, "resourcetypes", "rsrct")
 
 
 @pytest.fixture(scope="module")
-def resource_type_v(app, resource_type_type):
+def resource_type_v(app, resource_type_type,database):
     """Resource type vocabulary record."""
     vocabulary_service.create(system_identity, {
         "id": "dataset",
@@ -552,14 +533,14 @@ def resource_type_v(app, resource_type_type):
 
 
 @pytest.fixture(scope="module")
-def title_type(app):
+def title_type(app,database):
     """title vocabulary type."""
     return vocabulary_service.create_type(system_identity,
                                           "titletypes", "ttyp")
 
 
 @pytest.fixture(scope="module")
-def title_type_v(app, title_type):
+def title_type_v(app, title_type,database):
     """Title Type vocabulary record."""
     vocabulary_service.create(system_identity, {
         "id": "subtitle",
@@ -589,14 +570,14 @@ def title_type_v(app, title_type):
 
 
 @pytest.fixture(scope="module")
-def description_type(app):
+def description_type(app,database):
     """title vocabulary type."""
     return vocabulary_service.create_type(system_identity,
                                           "descriptiontypes", "dty")
 
 
 @pytest.fixture(scope="module")
-def description_type_v(app, description_type):
+def description_type_v(app, description_type,database):
     """Title Type vocabulary record."""
     vocab = vocabulary_service.create(system_identity, {
         "id": "methods",
@@ -615,7 +596,7 @@ def description_type_v(app, description_type):
 
 
 @pytest.fixture(scope="module")
-def subject_v(app):
+def subject_v(app,database):
     """Subject vocabulary record."""
     subjects_service = (
         current_service_registry.get("rdm-subjects")
@@ -632,13 +613,13 @@ def subject_v(app):
 
 
 @pytest.fixture(scope="module")
-def date_type(app):
+def date_type(app,database):
     """Date vocabulary type."""
     return vocabulary_service.create_type(system_identity, "datetypes", "dat")
 
 
 @pytest.fixture(scope="module")
-def date_type_v(app, date_type):
+def date_type_v(app, date_type,database):
     """Subject vocabulary record."""
     vocab = vocabulary_service.create(system_identity, {
         "id": "other",
@@ -657,7 +638,7 @@ def date_type_v(app, date_type):
 
 
 @pytest.fixture(scope="module")
-def contributors_role_type(app):
+def contributors_role_type(app,database):
     """Contributor role vocabulary type."""
     return vocabulary_service.create_type(
         system_identity, "contributorsroles", "cor"
@@ -665,7 +646,7 @@ def contributors_role_type(app):
 
 
 @pytest.fixture(scope="module")
-def contributors_role_v(app, contributors_role_type):
+def contributors_role_v(app, contributors_role_type,database):
     """Contributor role vocabulary record."""
     vocab = vocabulary_service.create(system_identity, {
         "id": "other",
@@ -682,9 +663,35 @@ def contributors_role_v(app, contributors_role_type):
 
     return vocab
 
+@pytest.fixture(scope="module")
+def creators_role_type(app,database):
+    """Creator role vocabulary type."""
+    return vocabulary_service.create_type(
+        system_identity, "creatorsroles", "crr"
+    )
+
 
 @pytest.fixture(scope="module")
-def relation_type(app):
+def creators_role_v(app, creators_role_type,database):
+    """Contributor role vocabulary record."""
+    vocab = vocabulary_service.create(system_identity, {
+        "id": "other",
+        "props": {
+            "datacite": "Other"
+        },
+        "title": {
+            "en": "Other"
+        },
+        "type": "creatorsroles"
+    })
+
+    Vocabulary.index.refresh()
+
+    return vocab
+
+
+@pytest.fixture(scope="module")
+def relation_type(app,database):
     """Relation type vocabulary type."""
     return vocabulary_service.create_type(
         system_identity, "relationtypes", "rlt"
@@ -692,7 +699,7 @@ def relation_type(app):
 
 
 @pytest.fixture(scope="module")
-def relation_type_v(app, relation_type):
+def relation_type_v(app, relation_type,database):
     """Relation type vocabulary record."""
     vocab = vocabulary_service.create(system_identity, {
         "id": "iscitedby",
@@ -711,7 +718,7 @@ def relation_type_v(app, relation_type):
 
 
 @pytest.fixture(scope="module")
-def licenses(app):
+def licenses(app,database):
     """Licenses vocabulary type."""
     return vocabulary_service.create_type(
         system_identity, "licenses", "lic"
@@ -719,7 +726,7 @@ def licenses(app):
 
 
 @pytest.fixture(scope="module")
-def licenses_v(app, licenses):
+def licenses_v(app, licenses,database):
     """Licenses vocabulary record."""
     vocab = vocabulary_service.create(system_identity, {
         "id": "cc-by-4.0",
@@ -749,7 +756,7 @@ def licenses_v(app, licenses):
 
 
 @pytest.fixture(scope="module")
-def affiliations_v(app):
+def affiliations_v(app,database):
     """Affiliation vocabulary record."""
     affiliations_service = (
         current_service_registry.get("rdm-affiliations")
@@ -795,6 +802,7 @@ RunningApp = namedtuple("RunningApp", [
     "description_type_v",
     "date_type_v",
     "contributors_role_v",
+    "creators_role_v",
     "relation_type_v",
     "licenses_v"
 ])
@@ -802,9 +810,9 @@ RunningApp = namedtuple("RunningApp", [
 
 @pytest.fixture
 def running_app(
-        app, superuser_identity, location, cache, resource_type_v, subject_v,
+        app, superuser_identity, location, cache,  resource_type_v, subject_v,
         languages_v, affiliations_v, title_type_v, description_type_v,
-        date_type_v, contributors_role_v, relation_type_v, licenses_v,db
+        date_type_v, contributors_role_v, creators_role_v, relation_type_v, licenses_v, database
 ):
     """This fixture provides an app with the typically needed db data loaded.
     All of these fixtures are often needed together, so collecting them
@@ -823,6 +831,7 @@ def running_app(
         description_type_v,
         date_type_v,
         contributors_role_v,
+        creators_role_v,
         relation_type_v,
         licenses_v
     )
@@ -899,38 +908,6 @@ def instance_path():
 def create_app(entry_points, instance_path):
      """Create app fixture for UI+API app."""
      return _create_app
-
-# @pytest.fixture(scope='module')
-# def create_app(instance_path, app_config ):
-#     def factory(**config):
-#         """Application factory fixture."""
-#         app = Flask('testapp', instance_path=instance_path)
-#         app.config.update(**config)
-#
-#         # Adding the temporal path to jinja engine.
-#         app.jinja_loader = jinja2.ChoiceLoader([
-#             jinja2.FileSystemLoader('.'),
-#             app.jinja_loader
-#         ])
-#         Babel(app)
-#         UltravioletDeposit(app)
-#         InvenioAssets(app)
-#         InvenioSearch(app)
-#         InvenioDB(app)
-#         InvenioRDMRecords(app)
-#         InvenioVocabularies(app)
-#         InvenioCache(app)
-#         InvenioAccess(app)
-#         InvenioRecords(app)
-#         InvenioJSONSchemas(app)
-#         InvenioRecordsResources(app)
-#         app.register_blueprint(blueprint)
-#         app.template_folder = 'tests'
-#         app.static_folder = '/Users/katepechekhonova/.local/share/virtualenvs/ultraviolet-deposit-b-imWsig/var/instance/static/'
-#         return app
-#
-#     return factory
-
 
 
 

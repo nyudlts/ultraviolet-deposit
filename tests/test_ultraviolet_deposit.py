@@ -8,7 +8,6 @@
 """Module tests."""
 
 from flask import Flask
-from invenio_theme import webpack
 from ultraviolet_deposit import UltravioletDeposit
 
 
@@ -31,7 +30,7 @@ def test_init():
     assert 'ultraviolet-deposit' in app.extensions
 
 
-def test_view(base_client):
+def test_view( running_app, base_client):
     """Test view."""
     res = base_client.get("/test")
     assert res.status_code == 200
