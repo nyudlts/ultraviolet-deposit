@@ -20,9 +20,8 @@ import sys
 multiprocessing.set_start_method("fork")
 
 
-
-def test_frontpage( running_app, live_server, browser):
-    """Test retrieval of front page."""
+def test_upload_form(running_app, live_server, browser):
+    """Test retrieval of upload page."""
     browser.get(url_for('test_deposit.deposit_form', _external=True))
-    print( browser.get_log('browser'), file=sys.stderr)
+    print(browser.get_log('browser'), file=sys.stderr)
     assert "New upload" == browser.find_element(By.TAG_NAME, "h1").text

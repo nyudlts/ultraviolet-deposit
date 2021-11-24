@@ -10,7 +10,7 @@
 See https://pytest-invenio.readthedocs.io/ for documentation on which test
 fixtures are available.
 """
-
+import sys
 from collections import namedtuple
 from datetime import datetime
 from unittest import mock
@@ -42,6 +42,7 @@ from invenio_accounts.testutils import login_user_via_session
 from invenio_records.dictutils import dict_set
 from invenio_records.errors import MissingModelError
 from invenio_records_files.api import FileObject
+import os
 
 
 
@@ -907,7 +908,10 @@ def create_app(entry_points, instance_path):
      """Create app fixture for UI+API app."""
      return _create_app
 
-
+# overriding instance path allows us to make sure we use ultraviolet templates
+@pytest.fixture(scope="module")
+def ultraviolet_instance_path():
+    return os.path.join(sys.prefix, "var", "instance")
 
 def new_record():
     """Create an empty record with default values."""

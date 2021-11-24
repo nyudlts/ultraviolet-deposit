@@ -32,16 +32,21 @@ Make sure you use node 14 and python 3.8
 
 
 ```
-pipenv install --pre
+pipenv install --pre --dev
+```
+
+```
+pipenv run pip install -e .
+```
+
+```
+./fix_template.sh
 ```
 
 ```
 pipenv run invenio webpack buildall
 ```
 
-```
-pipenv run pip install -e .
-```
 
 If you want to run E2E
 
@@ -50,5 +55,5 @@ export E2E='yes'
 ```
 
 ```
-./run-tests.sh
+pipenv run ./run-tests.sh
 ```

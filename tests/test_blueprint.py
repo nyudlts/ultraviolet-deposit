@@ -37,7 +37,7 @@ talisman = Talisman()
 def deposit_form():
     try:
         return render_template(
-            'index.html',
+            'test_deposit.html',
             forms_config=get_form_config(createUrl=("/api/records")),
             searchbar_config=dict(searchUrl=get_search_url()),
             record=new_record(),
