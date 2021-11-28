@@ -10,26 +10,23 @@
 =====================
 
 
-Custom Deposit for Ultraviolet
+This repository is a custom deposit module for UltraViolet and it will be used as an extension in the main UltraViolet project.
 
-Will be used as an extention in main Ultraviolet project.
-
-Could be added to the main Ultraviolet project by running the command below in ultraviolet root folder
+This module can be added to the main UltraViolet project by running the command below in the local UltraViolet root folder
 
 ```
 invenio-cli packages install git+https://github.com/nyudlts/ultraviolet-deposit#egg=ultraviolet-deposit
 ```
 
-If we are doing changes in the module and want to add the new version to the local instance of ultraviole we can run 
+If we are doing changes in the module and want to add the new version to the local instance of UltraViolet we can run
 
 ```
-invenio-cli packages install <path to the local copy of the demposit-module>
+invenio-cli packages install <path to the local copy of the deposit-module>
 ```
 
 To run tests separately
 
 Make sure you use node 14 and python 3.8
-
 
 ```
 pipenv install --pre --dev
