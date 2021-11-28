@@ -28,7 +28,7 @@ from sqlalchemy.orm import load_only
 
 
 test_deposit = Blueprint('test_deposit', __name__,
-                        template_folder='.', url_prefix='/')
+                        template_folder='templates', url_prefix='/')
 
 talisman = Talisman()
 

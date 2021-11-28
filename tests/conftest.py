@@ -17,6 +17,7 @@ from unittest import mock
 
 import pytest
 import arrow
+from click.testing import CliRunner
 from dateutil import tz
 from invenio_access import ActionRoles
 from invenio_accounts.models import Role
@@ -42,6 +43,8 @@ from invenio_accounts.testutils import login_user_via_session
 from invenio_records.dictutils import dict_set
 from invenio_records.errors import MissingModelError
 from invenio_records_files.api import FileObject
+from invenio_base.app import create_cli
+from invenio_assets import webpack,collect
 import os
 
 
@@ -811,7 +814,7 @@ RunningApp = namedtuple("RunningApp", [
 
 @pytest.fixture
 def running_app(
-        app, superuser_identity, location, cache,  resource_type_v, subject_v,
+        app, create_webpack, superuser_identity, location, cache,  resource_type_v, subject_v,
         languages_v, affiliations_v, title_type_v, description_type_v,
         date_type_v, contributors_role_v, creators_role_v, relation_type_v, licenses_v, database
 ):
@@ -837,6 +840,12 @@ def running_app(
         licenses_v
     )
 
+#add asssets to instance
+@pytest.fixture(scope="module")
+def create_webpack():
+    result = os.system("pipenv run invenio collect")
+    os.system(" echo "+str(result))
+    os.system("pipenv run invenio webpack buildall")
 
 @pytest.fixture(scope="function")
 def superuser_role_need(db):
@@ -904,14 +913,14 @@ def extra_entry_points():
 
 
 @pytest.fixture(scope='module')
-def create_app(entry_points, instance_path):
+def create_app(entry_points):
      """Create app fixture for UI+API app."""
      return _create_app
 
 # overriding instance path allows us to make sure we use ultraviolet templates
-@pytest.fixture(scope="module")
-def ultraviolet_instance_path():
-    return os.path.join(sys.prefix, "var", "instance")
+#@pytest.fixture(scope="module")
+#def ultraviolet_instance_path():
+    #return os.path.join(sys.prefix, "var", "instance")
 
 def new_record():
     """Create an empty record with default values."""

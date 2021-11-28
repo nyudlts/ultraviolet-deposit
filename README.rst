@@ -39,15 +39,6 @@ pipenv install --pre --dev
 pipenv run pip install -e .
 ```
 
-```
-./fix_template.sh
-```
-
-```
-pipenv run invenio webpack buildall
-```
-
-
 If you want to run E2E
 
 ```
