@@ -42,6 +42,11 @@ If you want to run E2E
 export E2E='yes'
 ```
 
+Before running E2E make sure that Selenium Client is installed and Chrome Webdriver is installed and added to you path.
+
+[Installation instructions](https://www.selenium.dev/selenium/docs/api/py/)
+
+
 ```
 pipenv run ./run-tests.sh
 ```
