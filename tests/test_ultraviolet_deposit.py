@@ -9,6 +9,7 @@
 
 from flask import Flask
 from ultraviolet_deposit import UltravioletDeposit
+import sys
 
 
 def test_version():

@@ -6,6 +6,7 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 """ A Blueprint which is used for rendering deposit form"""
+from flask import request
 
 from flask import Blueprint, abort, current_app, render_template
 from flask_talisman import Talisman
@@ -24,13 +25,14 @@ from invenio_vocabularies.proxies import current_service as vocabulary_service
 from invenio_vocabularies.records.models import VocabularyScheme
 from marshmallow_utils.fields.babel import gettext_from_dict
 from sqlalchemy.orm import load_only
+from flask import make_response, jsonify
 
-
-
+#Define a view which is used to prepare and display deposit form. It will be used only for testing.
 test_deposit = Blueprint('test_deposit', __name__,
-                        template_folder='templates', url_prefix='/')
+                         template_folder='templates', url_prefix='/')
 
 talisman = Talisman()
+
 
 @test_deposit.route('/test')
 @talisman(content_security_policy=[])
@@ -44,9 +46,24 @@ def deposit_form():
             files=dict(
                 default_preview=None, entries=[], links={}
             ),
-             )
+        )
     except TemplateNotFound:
         abort(404)
+
+
+@test_deposit.route('/api/vocabularies/languages')
+@talisman(content_security_policy=[])
+def return_languages():
+    suggestion = request.args.get('suggest')
+    hits = {}
+    if ('E' in suggestion):
+        hits['hits'] = {"hits": [
+            {"tags": ["macrolanguage", "living"], "title_l10n": "English", "id": "eng", "props": {"alpha_2": "en"}}],
+                        "total": 1}
+    else:
+        hits['hits'] = {"hits": [], "total": 0}
+    response = make_response(jsonify(hits), 200)
+    return response
 
 # Helper methods minimally needed to build deposit form
 def get_form_pids_config():
@@ -82,15 +99,15 @@ def get_form_pids_config():
             "can_be_managed": can_be_managed,
             "can_be_unmanaged": can_be_unmanaged,
             "btn_label_discard_pid": _("Discard the reserved {scheme_label}")
-            .format(scheme_label=scheme_label),
+                .format(scheme_label=scheme_label),
             "btn_label_get_pid": _("Get a {scheme_label} now!")
-            .format(scheme_label=scheme_label),
+                .format(scheme_label=scheme_label),
             "managed_help_text": _("Reserve a {scheme_label} or leave this "
                                    "field blank to have one automatically "
                                    "assigned when publishing.")
-            .format(scheme_label=scheme_label),
+                .format(scheme_label=scheme_label),
             "unmanaged_help_text": _("Copy and paste here your {scheme_label}")
-            .format(scheme_label=scheme_label),
+                .format(scheme_label=scheme_label),
         }
         pids_providers.append(pids_provider)
     return pids_providers
@@ -181,9 +198,9 @@ class VocabulariesOptions:
         """Dump subjects vocabulary (limitTo really)."""
         subjects = (
             VocabularyScheme.query
-            .filter_by(parent_id="subjects")
-            .options(load_only("id"))
-            .all()
+                .filter_by(parent_id="subjects")
+                .options(load_only("id"))
+                .all()
         )
         limit_to = [{"text": "All", "value": "all"}]
         # id is human readable and shorter, so we use it
@@ -294,6 +311,3 @@ def new_record():
     record = dump_empty(RDMRecordSchema)
     record["files"] = {"enabled": True}
     return record
-
-
-

@@ -18,9 +18,10 @@ include .editorconfig
 include .tx/config
 prune docs/_build
 recursive-include .github/workflows *.yml
-recursive-include ultraviolet_deposit/translations *.po *.pot *.mo
+recursive-include ultraviolet_deposit *.po *.pot *.mo
 recursive-include ultraviolet_deposit *.js
 recursive-include ultraviolet_deposit *.less
 recursive-include ultraviolet_deposit *.html
 recursive-include ultraviolet_deposit *.py
+recursive-include ultraviolet_deposit templates
 recursive-include tests *.py

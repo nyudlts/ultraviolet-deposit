@@ -50,7 +50,7 @@ ultraviolet = WebpackThemeBundle(
                 '@ckeditor/ckeditor5-build-classic': '^16.0.0',
                 '@ckeditor/ckeditor5-react': '^2.1.0',
                 'react-copy-to-clipboard': '^5.0.3',
-                'jquery': '^3.2.1',
+                'jquery': '^3.2.1'
             },
         ),
     }

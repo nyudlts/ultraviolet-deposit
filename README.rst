@@ -36,6 +36,14 @@ pipenv install --pre --dev
 pipenv run pip install -e .
 ```
 
+```
+pipenv run invenio webpack clean
+```
+
+```
+pipenv run invenio webpack buildall
+```
+
 If you want to run E2E
 
 ```
