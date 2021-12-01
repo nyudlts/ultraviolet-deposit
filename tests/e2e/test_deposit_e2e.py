@@ -27,7 +27,7 @@ def test_upload_form(running_app, live_server, browser):
     print(browser.get_log('browser'), file=sys.stderr)
     assert "New upload" == browser.find_element(By.TAG_NAME, "h1").text
 
-def test_resource_type(running_app, live_server, browser):
+def test_languages(running_app, live_server, browser):
     """Test retrieval of upload page."""
     browser.get(url_for('test_deposit.deposit_form', _external=True))
     dropdown = browser.find_element(By.NAME, "metadata.languages")
@@ -37,6 +37,21 @@ def test_resource_type(running_app, live_server, browser):
     input_search.clear()
     input_search.send_keys("Engl")
     sleep(30)
+
     dropdown_values = dropdown.find_element(By.CLASS_NAME, "visible.menu.transition")
-    print(dropdown_values.find_element(By.CLASS_NAME, "selected.item").get_attribute('innerHTML'))
     assert "English" == dropdown_values.find_element(By.CLASS_NAME, "selected.item").text
+
+
+def test_resource_types(running_app, live_server, browser):
+    """Test retrieval of upload page."""
+    browser.get(url_for('test_deposit.deposit_form', _external=True))
+    dropdown = browser.find_element(By.NAME, "metadata.resource_type")
+
+    input_search = dropdown.find_element(By.TAG_NAME, "input")
+    input_search.click()
+    input_search.clear()
+    input_search.send_keys("Data")
+    sleep(30)
+
+    dropdown_values = dropdown.find_element(By.CLASS_NAME, "visible.menu.transition")
+    assert "Dataset" == dropdown_values.find_element(By.CLASS_NAME, "selected.item").text

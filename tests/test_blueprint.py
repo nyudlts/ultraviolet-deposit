@@ -65,6 +65,35 @@ def return_languages():
     response = make_response(jsonify(hits), 200)
     return response
 
+@test_deposit.route('/api/vocabularies/resourcetypes')
+@talisman(content_security_policy=[])
+def return_resource_types():
+    suggestion = request.args.get('suggest')
+    hits = {}
+    if ('D' in suggestion):
+      hits['hits'] = {"hits": [{
+            "id": "dataset",
+            "icon": "table",
+            "props": {
+                "csl": "dataset",
+                "datacite_general": "Dataset",
+                "datacite_type": '',
+                "openaire_resourceType": '21',
+                "openaire_type": "dataset",
+                "eurepo": "info:eu-repo/semantics/other",
+                "schema.org": "https://schema.org/Dataset",
+                "subtype": '',
+                "type": "dataset",
+            },
+            "title_l10n":  "Dataset",
+            "tags": ["depositable", "linkable"],
+            "type": "resourcetypes"
+        }], "total": 1}
+    else:
+        hits['hits'] = {"hits": [], "total": 0}
+    response = make_response(jsonify(hits), 200)
+    return response
+
 # Helper methods minimally needed to build deposit form
 def get_form_pids_config():
     """Prepare configuration for the pids field."""

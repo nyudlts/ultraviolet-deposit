@@ -385,14 +385,14 @@ def identity_simple(users):
 
 
 @pytest.fixture(scope="module")
-def languages_type(app,database):
+def languages_type(app):
     """Lanuage vocabulary type."""
     return vocabulary_service.create_type(system_identity, "languages", "lng")
 
 
 
 @pytest.fixture(scope="module")
-def resource_type_type(app,database):
+def resource_type_type(app):
     """Resource type vocabulary type."""
     return vocabulary_service.create_type(
         system_identity, "resourcetypes", "rsrct")
