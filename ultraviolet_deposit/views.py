@@ -20,3 +20,4 @@ blueprint = Blueprint(
     static_folder='static',
 )
 
+

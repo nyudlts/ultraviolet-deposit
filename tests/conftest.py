@@ -100,6 +100,39 @@ def celery_config():
     """Override pytest-invenio fixture."""
     return {}
 
+def _es_create_indexes(current_search, current_search_client):
+    """Create all registered Elasticsearch indexes."""
+    to_create = [
+        RDMRecord.index._name,
+        RDMDraft.index._name
+    ]
+    # list to trigger iter
+    list(current_search.create(ignore_existing=True, index_list=to_create))
+    current_search_client.indices.refresh()
+
+
+def _es_delete_indexes(current_search):
+    """Delete all registered Elasticsearch indexes."""
+    to_delete = [
+        RDMRecord.index._name,
+        RDMDraft.index._name
+    ]
+    list(current_search.delete(index_list=to_delete))
+
+
+# overwrite pytest_invenio.fixture to only delete record indices
+# keeping vocabularies.
+@pytest.fixture(scope='function')
+def es_clear(es):
+    """Clear Elasticsearch indices after test finishes (function scope).
+    This fixture rollback any changes performed to the indexes during a test,
+    in order to leave Elasticsearch in a clean state for the next test.
+    """
+    from invenio_search import current_search, current_search_client
+    yield es
+    _es_delete_indexes(current_search)
+    _es_create_indexes(current_search, current_search_client)
+
 
 @pytest.fixture(scope='function')
 def full_record(users):
