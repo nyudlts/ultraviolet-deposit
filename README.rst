@@ -26,7 +26,7 @@ invenio-cli packages install <path to the local copy of the deposit-module>
 
 To run tests separately
 
-Make sure you use node 14 and python 3.8
+Make sure you use node 14 and python 3.8 and elasticsearch container is running
 
 ```
 pipenv install --pre --dev
