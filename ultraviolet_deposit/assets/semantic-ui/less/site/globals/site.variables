@@ -1,1 +1,1 @@
-/Users/katepechekhonova/PycharmProjects/ultraviolet/assets/less/site/globals/site.variables
+@import "../../variables.less";
