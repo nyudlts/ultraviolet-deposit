@@ -758,6 +758,35 @@ def cache():
     finally:
         current_cache.clear()
 
+@pytest.fixture(scope="module")
+def languages_v(app, languages_type):
+    """Language vocabulary record."""
+    vocabulary_service.create(system_identity, {
+        "id": "dan",
+        "title": {
+            "en": "Danish",
+            "da": "Dansk",
+        },
+        "props": {"alpha_2": "da"},
+        "tags": ["individual", "living"],
+        "type": "languages"
+    })
+
+    vocab = vocabulary_service.create(system_identity, {
+        "id": "eng",
+        "title": {
+            "en": "English",
+            "da": "Engelsk",
+        },
+        "tags": ["individual", "living"],
+        "type": "languages"
+    })
+
+    Vocabulary.index.refresh()
+
+    return vocab
+
+
 
 RunningApp = namedtuple("RunningApp", [
     "app",
@@ -767,6 +796,7 @@ RunningApp = namedtuple("RunningApp", [
     "resource_type_v",
     "subject_v",
     "affiliations_v",
+    "languages_v",
     "title_type_v",
     "description_type_v",
     "date_type_v",
@@ -780,7 +810,7 @@ RunningApp = namedtuple("RunningApp", [
 @pytest.fixture
 def running_app(
         app,  superuser_identity, location, cache,  resource_type_v, subject_v,
-       affiliations_v, title_type_v, description_type_v,
+       affiliations_v, languages_v, title_type_v, description_type_v,
         date_type_v, contributors_role_v, creators_role_v, relation_type_v, licenses_v, database
 ):
     """This fixture provides an app with the typically needed db data loaded.
@@ -795,6 +825,7 @@ def running_app(
         resource_type_v,
         subject_v,
         affiliations_v,
+        languages_v,
         title_type_v,
         description_type_v,
         date_type_v,
