@@ -94,6 +94,24 @@ def return_resource_types():
     response = make_response(jsonify(hits), 200)
     return response
 
+
+@test_deposit.route('/api/vocabularies/relationtypes')
+@talisman(content_security_policy=[])
+def return_relation_types():
+    suggestion = request.args.get('suggest')
+    hits = {}
+    if ('I' in suggestion):
+        hits['hits'] = {"hits": [{"id": "iscitedby",
+         "props": {
+            "datacite": "IsCitedBy"
+          },
+        "title_l10n": "Is cited by",
+        "type": "relationtypes"}], "total": 1 }
+    else:
+        hits['hits'] = {"hits": [], "total": 0}
+    response = make_response(jsonify(hits), 200)
+    return response
+
 # Helper methods minimally needed to build deposit form
 def get_form_pids_config():
     """Prepare configuration for the pids field."""
