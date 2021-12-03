@@ -29,7 +29,7 @@ def test_upload_form(running_app, live_server, browser):
     assert "New upload" == browser.find_element(By.TAG_NAME, "h1").text
 
 @pytest.mark.parametrize("select_field, search_key, assert_value",[("languages","Eng","English"),("resource_type","Data","Dataset")])
-def test_languages(running_app, live_server, browser,select_field, search_key, assert_value):
+def test_remote_select(running_app, live_server, browser,select_field, search_key, assert_value):
     """Test retrieval of upload page."""
     browser.get(url_for('test_deposit.deposit_form', _external=True))
     dropdown = browser.find_element(By.NAME, "metadata."+select_field)
