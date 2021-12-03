@@ -8,7 +8,8 @@
 
 
 # Usage:
-#   env DB=postgresql12 SEARCH=elasticsearch7 CACHE=redis MQ=rabbitmq ./run-tests.sh
+#   pipenv run ./run-tests.sh
+
 #check that pipenv is installed
 if ! command -v pipenv &> /dev/null
 then
@@ -23,10 +24,18 @@ then
     exit 1
 fi
 
-#make sure pytest.ini is present
+#make sure docker is installed 
 if ! command docker -v  &> /dev/null 
 then
     echo "docker is not istalled. Please install it"
+    exit 1
+fi
+
+
+#make sure docker is installed 
+if ! command docker-compose -v  &> /dev/null 
+then
+    echo "docker-compose is not istalled. Please install it"
     exit 1
 fi
 
