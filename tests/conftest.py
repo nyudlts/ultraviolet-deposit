@@ -17,7 +17,7 @@ from unittest import mock
 
 import pytest
 import arrow
-from click.testing import CliRunner
+
 from dateutil import tz
 from invenio_access import ActionRoles
 from invenio_accounts.models import Role
@@ -30,7 +30,7 @@ from invenio_vocabularies.contrib.affiliations.api import Affiliation
 from invenio_vocabularies.contrib.subjects.api import Subject
 from invenio_vocabularies.proxies import current_service as vocabulary_service
 from invenio_vocabularies.records.api import Vocabulary
-from invenio_app.factory import create_ui as _create_ui
+from invenio_app.factory import create_app as _create_app
 from invenio_rdm_records.services.schemas.utils import dump_empty
 from invenio_rdm_records.services.schemas import RDMRecordSchema
 
@@ -78,9 +78,19 @@ def app_config(app_config):
     # Variable not used. We set it to silent warnings
     app_config['JSONSCHEMAS_HOST'] = 'not-used'
 
-    app_config["SEARCH_INDEX_PREFIX"] = "test"
+    app_config["SEARCH_ELASTIC_HOSTS"] = [{"host": "localhost", "port": 9201}]
 
     app_config['BABEL_DEFAULT_LOCALE'] = 'en'
+
+    app_config['CACHE_REDIS_URL'] = 'redis://localhost:6378/0'
+
+    app_config['BROKER_URL'] = 'redis://localhost:6378/0'
+
+    app_config['RATELIMIT_STORAGE_URL'] = 'redis://localhost:6378/3'
+
+    app_config['ACCOUNTS_SESSION_REDIS_URL'] = 'redis://localhost:6378/1'
+
+    app_config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6378/2'
 
     app_config["SQLALCHEMY_ENGINE_OPTIONS"] = {
         "pool_pre_ping": False,
@@ -905,7 +915,7 @@ def extra_entry_points():
 @pytest.fixture(scope='module')
 def create_app(entry_points):
      """Create app fixture for UI+API app."""
-     return _create_ui
+     return _create_app
 
 
 def new_record():
