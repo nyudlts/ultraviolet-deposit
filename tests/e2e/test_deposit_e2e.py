@@ -26,7 +26,6 @@ def test_upload_form(running_app, live_server, browser):
     """Test retrieval of upload page."""
     browser.get(url_for('test_deposit.deposit_form', _external=True))
     print(browser.get_log('browser'), file=sys.stderr)
-    sleep(300)
     assert "New upload" == browser.find_element(By.TAG_NAME, "h1").text
 
 @pytest.mark.parametrize("select_field, search_key, assert_value",[("languages","Eng","English"),("resource_type","Data","Dataset")])

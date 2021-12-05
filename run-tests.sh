@@ -50,7 +50,7 @@ fi
 if [ "${E2E}" == 'yes' ]
 then
    #check that chromedriver is installed
-   if ! command -v  chromedriver &> /dev/null
+   if ! command -v chromedriver &> /dev/null
    then
       echo "Chromedriver could not be found. You can not run e2e testing"
       exit 1
