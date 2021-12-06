@@ -38,7 +38,7 @@ def test_remote_select(running_app, live_server, browser,select_field, search_ke
     input_search.click()
     input_search.clear()
     input_search.send_keys(search_key)
-    sleep(30)
+    sleep(90)
 
     dropdown_values = dropdown.find_element(By.CLASS_NAME, "visible.menu.transition")
     assert assert_value == dropdown_values.find_element(By.CLASS_NAME, "selected.item").text
