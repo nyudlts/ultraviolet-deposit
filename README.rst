@@ -10,7 +10,7 @@
 =====================
 
 
-This repository is a custom deposit module for UltraViolet and it will be used as an extension in the main UltraViolet project.
+This repository is a custom deposit module for UltraViolet, and it will be used as an extension in the main UltraViolet project.
 
 This module can be added to the main UltraViolet project by running the command below in the local UltraViolet root folder
 
@@ -24,9 +24,9 @@ If we are doing changes in the module and want to add the new version to the loc
 invenio-cli packages install <path to the local copy of the deposit-module>
 ```
 
-To run tests separately
+Any development with the module will require testing. To run tests separately, make sure you are using node 14, nvm 6 and python 3.8. Also, the ElasticSearch container must be running (check by running `docker ps`)
 
-Make sure you use node 14 and python 3.8 and elasticsearch container is running
+The testing process is:
 
 ```
 pipenv install --pre --dev
@@ -44,15 +44,16 @@ pipenv run invenio webpack clean
 pipenv run invenio webpack buildall
 ```
 
-If you want to run E2E
+If you want to run E2E tests use
 
 ```
 export E2E='yes'
 ```
 
-Before running E2E make sure that Selenium Client is installed and Chrome Webdriver is installed and added to you path.
+Before running E2E make sure that Selenium Client is installed and Chrome Webdriver is installed and added to your path.
 
-[Installation instructions](https://www.selenium.dev/selenium/docs/api/py/)
+- [Selenium installation instructions](https://www.selenium.dev/selenium/docs/api/py/)
+- [Chrome Webdriver installation instructions](https://formulae.brew.sh/cask/chromedriver) - Note that if you install via HomeBrew on a Mac, you will have to go to your security permissions and allow ChromeDriver before running the E2E test.
 
 
 ```
