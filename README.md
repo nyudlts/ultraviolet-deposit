@@ -1,18 +1,16 @@
-..
-    Copyright (C) 2021 NYU.
-
-    Ultraviolet-Deposit is free software; you can redistribute it and/or
-    modify it under the terms of the MIT License; see LICENSE file for more
-    details.
-
-=====================
- Ultraviolet-Deposit
-=====================
-
+# Ultraviolet-Deposit
 
 This repository is a custom deposit module for UltraViolet, and it will be used as an extension in the main UltraViolet project.
 
-This module can be added to the main UltraViolet project by running the command below in the local UltraViolet root folder
+#### Copyright
+
+Copyright (C) 2021 NYU.
+
+Ultraviolet-Deposit is free software; you can redistribute it and/or modify it under the terms of the MIT License; see LICENSE file for more details.
+
+#### Overview
+
+This module can be added to the [main UltraViolet project](https://github.com/nyudlts/ultraviolet) by running the command below in the local UltraViolet root folder:
 
 ```
 invenio-cli packages install git+https://github.com/nyudlts/ultraviolet-deposit#egg=ultraviolet-deposit
