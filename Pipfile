@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+invenio-app-rdm = {version = "~=6.0.4", extras = ["elasticsearch7", "postgresql"]}
+invenio-drafts-resources = "<0.14.0,>=0.13.4"
+invenio-rdm-records = "<0.33.0,>=0.32.4"
+invenio-records-permissions = "<0.13.0,>=0.12.1"
+invenio-records-resources = "<0.17.0,>=0.16.12"
+
+[dev-packages]
+pytest = "*"
+pytest-invenio = "*"
+flask-babelex = "*"
+selenium = "*"
+flask-pytest = "*"
+
+[requires]
+python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true

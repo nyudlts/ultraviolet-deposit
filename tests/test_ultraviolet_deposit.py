@@ -8,8 +8,8 @@
 """Module tests."""
 
 from flask import Flask
-
 from ultraviolet_deposit import UltravioletDeposit
+import sys
 
 
 def test_version():
@@ -31,8 +31,7 @@ def test_init():
     assert 'ultraviolet-deposit' in app.extensions
 
 
-def test_view(base_client):
+def test_view( running_app, base_client):
     """Test view."""
-    res = base_client.get("/")
+    res = base_client.get("/test")
     assert res.status_code == 200
-    assert 'index.js' in str(res.data)

@@ -71,7 +71,7 @@ setup(
             'messages = ultraviolet_deposit',
         ],
         'invenio_assets.webpack': {
-            'ultraviolet_deposit_theme = ultraviolet_deposit.webpack:ultraviolet'
+            'ultraviolet = ultraviolet_deposit.webpack:ultraviolet'
         },
     },
     extras_require=extras_require,

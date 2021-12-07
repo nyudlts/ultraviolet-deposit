@@ -10,8 +10,13 @@
 # TODO: This is an example file. Remove it if your package does not use any
 # extra configuration variables.
 
-ULTRAVIOLET_DEPOSIT_DEFAULT_VALUE = 'foobar'
+ULTRAVIOLET_DEPOSIT_DEFAULT_VALUE = 'ultraviolet'
 """Default value for the application."""
 
 ULTRAVIOLET_DEPOSIT_BASE_TEMPLATE = 'ultraviolet_deposit/base.html'
 """Default base template for the demo page."""
+
+# Default values for deposit form
+ULTRAVIOLET_DEPOSIT_APP_RDM_DEPOSIT_FORM_DEFAULTS = {
+    "publisher": "UltraViolet"
+}
