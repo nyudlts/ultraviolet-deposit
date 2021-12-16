@@ -20,3 +20,9 @@ ULTRAVIOLET_DEPOSIT_BASE_TEMPLATE = 'ultraviolet_deposit/base.html'
 ULTRAVIOLET_DEPOSIT_APP_RDM_DEPOSIT_FORM_DEFAULTS = {
     "publisher": "UltraViolet"
 }
+
+ULTRAVIOLET_DEPOSIT_LIMITS = {
+    "files_limit": "20",
+    "storage_limit": "10Mb",
+    "embargo_limit": "1Y"
+}
