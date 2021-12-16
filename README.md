@@ -22,6 +22,23 @@ If we are doing changes in the module and want to add the new version to the loc
 invenio-cli packages install <path to the local copy of the deposit-module>
 ```
 
+There is a set of additional configuration variables we will use in the deposit module. They can be passed through the deposit.html template
+The line which needs to be added to template is:
+```
+{%- if config.ULTRAVIOLET_DEPOSIT_LIMITS  %}
+  <input id="deposits-limits" type="hidden" name="deposits-limits" value='{{ config.ULTRAVIOLET_DEPOSIT_LIMITS }}'></input>
+{%- endif %}
+```
+Additional configuration variables define in module configs:
+```
+ULTRAVIOLET_DEPOSIT_LIMITS = {
+    "files_limit": "20",
+    "storage_limit": "10Mb",
+    "embargo_limit": "1Y"
+}
+```
+
+
 Any development with the module will require testing. To run tests separately, make sure you are using node 14, nvm 6 and python 3.8. Also, the ElasticSearch container must be running (check by running `docker ps`)
 
 The testing process is:
