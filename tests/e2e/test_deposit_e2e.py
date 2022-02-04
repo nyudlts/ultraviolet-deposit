@@ -16,6 +16,7 @@ import logging
 import sys
 from time import sleep
 import pytest
+import config
 
 
 """This is needed so live_server fixture can be used on Mac with python3.8 
@@ -42,3 +43,10 @@ def test_remote_select(running_app, live_server, browser,select_field, search_ke
 
     dropdown_values = dropdown.find_element(By.CLASS_NAME, "visible.menu.transition")
     assert assert_value == dropdown_values.find_element(By.CLASS_NAME, "selected.item").text
+
+def test_configs_passed(running_app, live_server, browser):
+    """Test retrieval of upload page."""
+    browser.get(url_for('test_deposit.deposit_form', _external=True))
+    ultraviolet_deposits_config = browser.find_element(By.NAME, "ultraviolet-deposits-config")
+
+    assert ultraviolet_deposits_config is not None
