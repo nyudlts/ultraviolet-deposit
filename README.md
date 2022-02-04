@@ -25,16 +25,20 @@ invenio-cli packages install <path to the local copy of the deposit-module>
 There is a set of additional configuration variables we will use in the deposit module. They can be passed through the deposit.html template
 The line which needs to be added to template is:
 ```
-{%- if config.ULTRAVIOLET_DEPOSIT_LIMITS  %}
-  <input id="deposits-limits" type="hidden" name="deposits-limits" value='{{ config.ULTRAVIOLET_DEPOSIT_LIMITS }}'></input>
+{%- if config.ULTRAVIOLET_DEPOSIT_CONFIG  %}
+  <input id="ultraviolet-deposit-config" type="hidden" name="ultraviolet-deposit-config" value='{{ config.ULTRAVIOLET_DEPOSIT_CONFIG }}'></input>
 {%- endif %}
 ```
 Additional configuration variables define in module configs:
 ```
-ULTRAVIOLET_DEPOSIT_LIMITS = {
-    "files_limit": "20",
-    "storage_limit": "10Mb",
-    "embargo_limit": "1Y"
+ULTRAVIOLET_DEPOSIT_CONFIG = {
+    "components": {
+        "limits": {
+            "files_limit": "20",
+            "storage_limit": "10Mb",
+            "embargo_limit": "1Y"
+        }
+    }
 }
 ```
 

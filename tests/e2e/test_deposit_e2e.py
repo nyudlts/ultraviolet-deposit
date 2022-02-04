@@ -47,6 +47,6 @@ def test_remote_select(running_app, live_server, browser,select_field, search_ke
 def test_configs_passed(running_app, live_server, browser):
     """Test retrieval of upload page."""
     browser.get(url_for('test_deposit.deposit_form', _external=True))
-    deposits_limits = browser.find_element(By.NAME, "deposits-limits")
+    ultraviolet_deposits_config = browser.find_element(By.NAME, "ultraviolet-deposits-config")
 
-    assert deposits_limits is not None
+    assert ultraviolet_deposits_config is not None
