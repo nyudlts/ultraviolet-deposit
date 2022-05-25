@@ -28,7 +28,11 @@ def test_upload_form(running_app, live_server, browser):
     print(browser.get_log('browser'), file=sys.stderr)
     assert "New upload" == browser.find_element(By.TAG_NAME, "h1").text
 
-@pytest.mark.parametrize("select_field, search_key, assert_value",[("languages","Eng","English"),("resource_type","Data","Dataset")])
+@pytest.mark.parametrize("select_field, search_key, assert_value",[
+    ("languages","Eng","English"),
+    ("resource_type","Data","Dataset"),
+    ("related_work", "ML", "Machine Learning"),
+    ("alternate_identifiers", "AI1", "Alternate Identifier 1")])
 def test_languages(running_app, live_server, browser,select_field, search_key, assert_value):
     """Test retrieval of upload page."""
     browser.get(url_for('test_deposit.deposit_form', _external=True))
