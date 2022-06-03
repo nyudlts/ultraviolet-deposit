@@ -9,14 +9,14 @@ services:
     environment:
       - "INVENIO_SEARCH_ELASTIC_HOSTS=['es:9200']"
       - "INVENIO_SECRET_KEY=CHANGE_ME"
-      - "INVENIO_CACHE_REDIS_URL=redis://cache:6378/0"
+      - "INVENIO_CACHE_REDIS_URL=redis://cache:6379/0"
       - "INVENIO_CACHE_TYPE=redis"
   cache:
     image: redis
     restart: "unless-stopped"
     read_only: true
     ports:
-      - "6378:6379"
+      - "6379:6379"
   es:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.3
     restart: "unless-stopped"
@@ -35,5 +35,5 @@ services:
         hard: -1
     mem_limit: 1g
     ports:
-      - "9201:9200"
+      - "9200:9200"
       - "9301:9300"

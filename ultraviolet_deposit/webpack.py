@@ -46,6 +46,7 @@ ultraviolet = WebpackThemeBundle(
                 'react-dnd-html5-backend': '^11.1.3',
                 'react-invenio-deposit': '^0.17.0',
                 'react-ultraviolet-deposit': '^0.0.3',
+                'nyudlts-react-ultraviolet-deposit': '^0.0.7',
                 'yup': '^0.32.9',
                 '@ckeditor/ckeditor5-build-classic': '^16.0.0',
                 '@ckeditor/ckeditor5-react': '^2.1.0',
