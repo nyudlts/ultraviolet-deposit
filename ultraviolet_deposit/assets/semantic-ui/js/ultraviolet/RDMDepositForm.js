@@ -16,6 +16,7 @@ import {
   DepositFormApp,
   DepositFormTitle,
   DescriptionsField,
+  EmbargoAccess,
   FileUploader,
   FormFeedback,
   IdentifiersField,
@@ -396,6 +397,21 @@ export class RDMDepositForm extends Component {
                       label={i18next.t("Visibility")}
                       labelIcon={"shield"}
                     />
+
+                    {/* <EmbargoAccess
+                      access={{
+                        embargo: {
+                          active: null,
+                          reason: null,
+                          until: null
+                        },
+                        files: null,
+                        record: null,
+                        status: null
+                      }}
+                      accessCommunity="public"
+                      metadataOnly={false}
+                    /> */}
                   </Sticky>
                 </Grid.Column>
               </Ref>
