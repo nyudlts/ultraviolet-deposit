@@ -28,7 +28,7 @@ document.getElementsByClassName("save-button")[0]
           const today = new Date()
 
           if((embargoDate - today) / (1000 * 3600 * 24*365) > 1 ) {
-            alert("Embargo Date cannot be greater than 1 year from now.");
             document.getElementsByName("publish")[0].disabled = true;
+            alert("Embargo Date cannot be greater than 1 year from now.");
           }
         })

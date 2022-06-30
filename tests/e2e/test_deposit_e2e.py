@@ -11,6 +11,7 @@
 
 from flask import url_for
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.alert import Alert
 import multiprocessing
 import logging
 import sys
@@ -66,14 +67,17 @@ def test_dropdowns(running_app, live_server, browser, select_field, search_key, 
 
 
 @pytest.mark.parametrize("input_date, alert_value, publish", [
-    ("2022-10-01", "", "true"),
-    ("2023-10-01", "Embargo Date cannot be greater than 1 year from now.", "false")])
+    ("2022-10-01", "", True),
+    ("2023-10-01", "Embargo Date cannot be greater than 1 year from now.", False)])
 def test_embargo(running_app, live_server, browser, input_date, alert_value, publish):
     errors = []
     browser.get(url_for('test_deposit.deposit_form', _external=True))
-    print(browser.get_log('browser'))
+
     # Enable Embargo
-    browser.find_element(By.ID, "access.embargo.active").click()
+    embargo_checkbox = browser.find_element(By.ID, "access.embargo.active")
+    print("Checkbox Type: {}".format(embargo_checkbox.get_attribute("type")))
+    embargo_checkbox.click()
+    print(f"Is Active Selected {embargo_checkbox.is_selected()}")
 
     # Apply Embargo Until Date
     embargo_field = browser.find_element(By.ID, "access.embargo.until")
@@ -82,10 +86,16 @@ def test_embargo(running_app, live_server, browser, input_date, alert_value, pub
     # Press "Save Draft" Button
     browser.find_element(By.NAME, "save").click()
 
-    if publish != browser.find_element(By.NAME, "publish").is_enabled():
-        errors.append("Publish button test fail.")
-    if alert_value != browser.switch_to.alert.text:
+    if input_date == "2023-10-01":
+        publish_state = browser.find_element(By.NAME, "publish").is_enabled()
+        if publish != publish_state:
+            errors.append("Publish button test fail.")
+
+    print(errors)
+    a = Alert(browser)
+    if alert_value != a.text:
         errors.append("Embargo Alert Test Fail.")
+    a.accept()
 
     assert not errors, "Errors Occured: \n{}".format("\n".join(errors))
 
