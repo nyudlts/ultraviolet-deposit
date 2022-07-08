@@ -5,13 +5,15 @@ user=${1:-vagrant}
 
 # https://www.digitalocean.com/community/tutorials/package-management-basics-apt-yum-dnf-pkg
 yum check-update
-yum install -y yum-utils gnupg2.x86_64 \
-    ca-certificates git curl wget unzip \
+yum install -y yum-utils \  
+    ca-certificates curl wget unzip \
     pycairo-devel dejavu-fonts-common freetype-devel java-1.8.0-openjdk-devel \
     xorg-x11-server-Xvfb libvirt-gconfig device-mapper-persistent-data lvm2-devel \
-    lvm2-python-libs \
-    gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel libffi-devel xz-devel
-
+    lvm2-libs \
+yum install -y  gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel libffi-devel xz-devel
+yum install -y libffi-devel findutils
+yum -y install git
+yum -y install patch 
 
 # Install NodeJS/npm
 # https://computingforgeeks.com/how-to-install-latest-nodejs-on-centos-fedora/
@@ -27,7 +29,6 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 #   perform install
 yum check-update
 yum install -y docker-ce docker-ce-cli containerd.io
-
 # Allow the user to use docker
 usermod -aG docker $user
 
@@ -36,7 +37,8 @@ echo vm.max_map_count=262144 > /etc/sysctl.d/vm_max_map_count.conf
 sysctl --system
 
 # Install docker-compose, cookiecutter and pipenv for the user
-#su -c "pip3 install --user cookiecutter pipenv docker-compose" $user
+yum -y install python3-pip
+#su -c "pip install --user cookiecutter pipenv docker-compose" $user
 
 # enable and start docker
 systemctl enable docker
@@ -48,10 +50,10 @@ cd /home/vagrant/bin
 CHROMEDRIVER_VERSION=$(curl "http://chromedriver.storage.googleapis.com/LATEST_RELEASE")
 wget "http://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
 unzip chromedriver_linux64.zip
-rm chromedriver_linux64.zipi
+rm chromedriver_linux64.zip
 chown vagrant:vagrant /home/vagrant/bin 
 # install pipenv
-#pip3 install pipenv
+#pip install pipenv
 
 #build environment
 #../build_env.sh

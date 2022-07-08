@@ -18,7 +18,9 @@ nvm install 14.17.3
 nvm use 14
 
 # Install docker-compose, cookiecutter and pipenv for the user
-pip install --user cookiecutter pipenv docker-compose
+pip install --user cookiecutter
+pip install --user  pipenv
+pip install --user docker-compose
 
 
 cd ultraviolet-deposit
@@ -31,7 +33,7 @@ pipfile_lock_path="$script_path/../Pipfile.lock"
 
 if [ ! -f "$pipfile_lock_path" ]; then
     echo "'Pipfile.lock' not found. Generating via 'pipenv lock --dev'..."
-    pipenv lock --dev --pre
+   # pipenv lock --dev --pre
 fi
 
 # Installs all packages specified in Pipfile.lock
@@ -40,10 +42,10 @@ pipenv sync --dev --pre
 pipenv run pip install -e .
 # Build assets
 nvm use 14
-pipenv run invenio collect 
-pipenv run invenio webpack buildall
+#pipenv run invenio collect 
+#pipenv run invenio webpack buildall
 
 wget "https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
-sudo yum -y localinstall google-chrome-stable_current_x86_64.rpm
+#sudo yum -y localinstall google-chrome-stable_current_x86_64.rpm
 
 echo 'export PATH=$PATH:/home/vagrant/bin' >> ~/.bashrc
