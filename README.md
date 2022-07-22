@@ -1,18 +1,16 @@
-..
-    Copyright (C) 2021 NYU.
-
-    Ultraviolet-Deposit is free software; you can redistribute it and/or
-    modify it under the terms of the MIT License; see LICENSE file for more
-    details.
-
-=====================
- Ultraviolet-Deposit
-=====================
-
+# Ultraviolet-Deposit
 
 This repository is a custom deposit module for UltraViolet, and it will be used as an extension in the main UltraViolet project.
 
-This module can be added to the main UltraViolet project by running the command below in the local UltraViolet root folder
+#### Copyright
+
+Copyright (C) 2021 NYU.
+
+Ultraviolet-Deposit is free software; you can redistribute it and/or modify it under the terms of the MIT License; see LICENSE file for more details.
+
+#### Overview
+
+This module can be added to the [main UltraViolet project](https://github.com/nyudlts/ultraviolet) by running the command below in the local UltraViolet root folder:
 
 ```
 invenio-cli packages install git+https://github.com/nyudlts/ultraviolet-deposit#egg=ultraviolet-deposit
@@ -23,6 +21,27 @@ If we are doing changes in the module and want to add the new version to the loc
 ```
 invenio-cli packages install <path to the local copy of the deposit-module>
 ```
+
+There is a set of additional configuration variables we will use in the deposit module. They can be passed through the deposit.html template
+The line which needs to be added to template is:
+```
+{%- if config.ULTRAVIOLET_DEPOSIT_CONFIG  %}
+  <input id="ultraviolet-deposit-config" type="hidden" name="ultraviolet-deposit-config" value='{{ config.ULTRAVIOLET_DEPOSIT_CONFIG }}'></input>
+{%- endif %}
+```
+Additional configuration variables define in module configs:
+```
+ULTRAVIOLET_DEPOSIT_CONFIG = {
+    "components": {
+        "limits": {
+            "files_limit": "20",
+            "storage_limit": "10Mb",
+            "embargo_limit": "1Y"
+        }
+    }
+}
+```
+
 
 Any development with the module will require testing. To run tests separately, make sure you are using node 14, nvm 6 and python 3.8. Also, the ElasticSearch container must be running (check by running `docker ps`)
 
