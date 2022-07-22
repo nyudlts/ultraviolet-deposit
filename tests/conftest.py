@@ -206,6 +206,7 @@ def full_record(users):
                 "description": "A date"
             }],
             "languages": [{"id": "dan"}, {"id": "eng"}],
+            "alternate_identifier": [{"id": "alternate identifier 1"}],
             "identifiers": [{
                 "identifier": "1924MNRAS..84..308E",
                 "scheme": "bibcode"
@@ -216,6 +217,7 @@ def full_record(users):
                 "relation_type": {"id": "iscitedby"},
                 "resource_type": {"id": "dataset"}
             }],
+            "related_work": [{"id": "machine learning", "id": "deep learning"}],
             "sizes": [
                 "11 pages"
             ],
@@ -427,11 +429,118 @@ def identity_simple(users):
     return i
 
 
+def _es_create_indexes(current_search, current_search_client):
+    """Create all registered Elasticsearch indexes."""
+    to_create = [
+        RDMRecord.index._name,
+        RDMDraft.index._name,
+        'vocabularies-vocabulary-v1.0.0'
+    ]
+    print(to_create)
+
+    # list to trigger iter
+    list(current_search.create(ignore_existing=True, index_list=to_create))
+    current_search_client.indices.refresh()
+
+def _es_delete_indexes(current_search):
+    """Delete all registered Elsticsearch indexes"""
+    to_delete = [
+        RDMRecord.index._name,
+        RDMDraft.index._name,
+        'vocabularies-vocabulary-v1.0.0'
+    ]
+    list(current_search.delete(index_list=to_delete))
+
+
+@pytest.fixture(scope='function')
+def es_clear(es):
+    """Clear Elasticsearch indices after test finishes (function scope).
+    This fixture rollback any changes performed to the indices during a test,
+    in order to leave Elasticsearch in a clean state for the next test.
+    """
+
+    from invenio_search import current_search, current_search_client
+    yield es
+    _es_delete_indexes(current_search)
+    _es_create_indexes(current_search, current_search_client)
+
+
 @pytest.fixture(scope="module")
 def languages_type(app):
     """Lanuage vocabulary type."""
     return vocabulary_service.create_type(system_identity, "languages", "lng")
 
+
+@pytest.fixture(scope="module")
+def related_work_type(app):
+    """Related Work vocabulary type."""
+    return vocabulary_service.create_type(system_identity, "related_work", 'relw')
+
+
+@pytest.fixture(scope="module")
+def related_work_v(app, related_work_type):
+    """Related Work vocabulary record."""
+    vocabulary_service.create(system_identity, {
+        "id": "Machine Learning",
+        "props": {
+            "datacite": "Machine Learning"
+        },
+        "title": {
+            "en": "Machine Learning"
+        },
+        "type": "relatedworks"
+    })
+
+    vocab = vocabulary_service.create(system_identity, {
+        "id": "another-related-work",
+        "props": {
+            "datacite": "another-related-work"
+        },
+        "title": {
+            "en": "another-related-work"
+        },
+        "type": "relatedworks"
+    })
+
+    Vocabulary.index.refresh()
+
+    return vocab
+
+
+@pytest.fixture(scope="module")
+def alternate_identifier_type(app):
+    """Alternate Identifier vocabulary type."""
+    return vocabulary_service.create_type(system_identity, "alternate_identifier", 'alti')
+
+
+@pytest.fixture(scope="module")
+def alternate_identifier_v(app, alternate_identifier_type):
+    """Alternate Identifier vocabulary record."""
+    vocabulary_service.create(system_identity, {
+        "id": "Alternate Identifier 1",
+        "props": {
+            "datacite": "Alternate Identifier 1"
+        },
+        "title": {
+            "en": "Alternate Identifier 1"
+        },
+        "type": "alternateidentifiers"
+    })
+
+    vocab = vocabulary_service.create(system_identity, {
+        "id": "another-alternate-identifier",
+        "props": {
+            "datacite": "another-alternate-identifier"
+        },
+        "title": {
+            "en": "another-alternate-identifier"
+        },
+        "type": "alternateidentifiers"
+    })
+
+    Vocabulary.index.refresh()
+
+    return vocab
 
 
 @pytest.fixture(scope="module")

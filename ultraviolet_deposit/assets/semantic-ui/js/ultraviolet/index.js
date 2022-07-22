@@ -21,3 +21,17 @@ ReactDOM.render(
   />,
   document.getElementById("deposit-form")
 );
+
+document.getElementsByClassName("save-button")[0]
+        .addEventListener("click", function() {
+          const embargoCheckbox = document.getElementById("access.embargo.active")
+          if(embargoCheckbox.checked) {
+            const embargoDate = new Date(document.getElementById("access.embargo.until").value)   // YYYY-MM-DD
+            const today = new Date()
+
+            if((embargoDate - today) / (1000 * 3600 * 24*365) > 1 ) {
+              document.getElementsByName("publish")[0].disabled = true;
+              alert("Embargo Date cannot be greater than 1 year from now.");
+            }
+          }
+        })

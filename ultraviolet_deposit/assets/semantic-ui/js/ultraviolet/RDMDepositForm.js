@@ -16,6 +16,7 @@ import {
   DepositFormApp,
   DepositFormTitle,
   DescriptionsField,
+  EmbargoAccess,
   FileUploader,
   FormFeedback,
   IdentifiersField,
@@ -34,6 +35,7 @@ import {
 } from "react-invenio-deposit";
 import { AccordionField } from "react-invenio-forms";
 import { RemoteResourceTypeField } from "react-ultraviolet-deposit";
+import { RemoteAlternateIdentifierField, RemoteRelatedWorkField } from "nyudlts-react-ultraviolet-deposit";
 import { Card, Container, Divider, Grid, Ref, Sticky } from "semantic-ui-react";
 import { i18next } from "./i18next";
 
@@ -203,6 +205,16 @@ export class RDMDepositForm extends Component {
 
                   <RemoteResourceTypeField
                     initialSuggestions={_get(this.props.record, "ui.resource_type", {})}
+                    required
+                  />
+
+                  <RemoteAlternateIdentifierField
+                    initialSuggestions={{id: 'Alternate Identifier 1', title_l10n: 'Alternate Identifier 1'}}
+                    required
+                  />
+
+                  <RemoteRelatedWorkField
+                    initialSuggestions={{id: 'Machine Learning', title_l10n: 'Machine Learning'}}
                     required
                   />
 
@@ -385,6 +397,21 @@ export class RDMDepositForm extends Component {
                       label={i18next.t("Visibility")}
                       labelIcon={"shield"}
                     />
+
+                    {/* <EmbargoAccess
+                      access={{
+                        embargo: {
+                          active: null,
+                          reason: null,
+                          until: null
+                        },
+                        files: null,
+                        record: null,
+                        status: null
+                      }}
+                      accessCommunity="public"
+                      metadataOnly={false}
+                    /> */}
                   </Sticky>
                 </Grid.Column>
               </Ref>

@@ -13,6 +13,14 @@
   </head>
   <body>
 {%- block page_body %}
+  <button class="save-button" name="save">Save Draft</button>
+    <button class="publish" name="publish">Publish</button>
+
+    <input type="checkbox" id="access.embargo.active" name="Active Embargo" />
+    <label for="Active Embargo">Apply an Embargo</label>
+
+    <input type="text" id="access.embargo.until" name="Embargo Until" placeholder="YYYY-MM-DD" />
+    <label for="Embargo Until"></label>
   {%- if record %}
   <input id="deposits-record" type="hidden" name="deposits-record" value='{{record | tojson }}'></input>
   {%- endif %}
