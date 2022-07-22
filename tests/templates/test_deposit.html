@@ -33,6 +33,9 @@
   {%- if permissions %}
   <input id="deposits-record-permissions" type="hidden" name="deposits-record-permissions" value='{{permissions | tojson }}'></input>
   {%- endif %}
+  {%- if config.get('ULTRAVIOLET_DEPOSIT_CONFIG')  %}
+  <input id="ultraviolet-deposits-config" type="hidden" name="ultraviolet-deposits-config" value='{{  config.ULTRAVIOLET_DEPOSIT_CONFIG }}'></input>
+  {%- endif %}
   <div id="deposit-form"></div>
 
   {%- block javascript %}
